@@ -1,0 +1,35 @@
+package com.example.blurryface.localbound;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class BoundService extends Service {
+    private final IBinder myBinder = new MyLocalBinder();
+    public BoundService() {
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        return myBinder;
+    }
+    public String getCurrentTime()
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yy", Locale.US);
+        String dateString = dateFormat.format(new Date());
+        return dateString;
+    }
+    public class MyLocalBinder extends Binder
+    {
+        BoundService getService()
+        {
+            return BoundService.this;
+        }
+    }
+}
